@@ -50,7 +50,9 @@
         components: {
             EssentialLink,
         },
-
+        mounted() {
+            this.$store.dispatch('checkIfSessionKeyValid');
+        },
         data() {
             return {
                 leftDrawerOpen: false,

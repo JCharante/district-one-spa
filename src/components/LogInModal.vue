@@ -86,6 +86,7 @@
                     phoneNumber: this.tel,
                     code: this.code,
                 }).then((response) => {
+                    this.$store.dispatch('setSessionKey', response.data);
                     console.log(response);
                 });
             },
