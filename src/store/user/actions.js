@@ -1,6 +1,47 @@
 import { LocalStorage, Notify } from 'quasar';
 import { axiosInstance } from '../../boot/axios';
 
+export function refreshShortTeamInfo({ commit }) {
+    return new Promise((resolve, reject) => {
+        axiosInstance.post('/', {
+            requestType: 'getTeamsForTeamList',
+        }).then((response) => {
+            commit('setShortTeamInfo', response.data.teams);
+            resolve();
+        }).catch((err) => {
+            reject(err);
+            Notify.create({
+                message: err,
+                timeout: 2000,
+                color: 'red',
+            });
+        });
+    });
+}
+
+// eslint-disable-next-line camelcase
+export function getTeamAvatars({ commit }, { list_of_team_number }) {
+    return new Promise((resolve, reject) => {
+        axiosInstance.post('/', {
+            requestType: 'getAvatarsForTeams',
+            list_of_team_number,
+        }).then((response) => {
+            // eslint-disable-next-line camelcase
+            Object.keys(response.data).forEach((team_number) => {
+                commit('setTeamAvatar', { team_number, avatar: response.data[team_number] });
+            });
+            resolve();
+        }).catch((err) => {
+            reject(err);
+            Notify.create({
+                message: err,
+                timeout: 2000,
+                color: 'red',
+            });
+        });
+    });
+}
+
 export function checkIfSessionKeyValid({ state, dispatch }) {
     return new Promise((resolve, reject) => {
         axiosInstance.post('/', {

@@ -5,6 +5,8 @@ function baseGen() {
         sessionKey: '',
         lastAnnouncementVersionShown: 1,
         hideAnnouncement: false,
+        shortTeamInfo: [],
+        teamAvatars: {},
     };
 }
 

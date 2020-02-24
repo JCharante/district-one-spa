@@ -52,6 +52,7 @@
         },
         mounted() {
             this.$store.dispatch('checkIfSessionKeyValid');
+            this.$store.dispatch('refreshShortTeamInfo');
         },
         data() {
             return {
