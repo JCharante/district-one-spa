@@ -1,5 +1,5 @@
 import { LocalStorage, Notify } from 'quasar';
-import { axiosInstance } from '../../boot/axios';
+import axios, { axiosInstance } from '../../boot/axios';
 
 export function refreshShortTeamInfo({ commit }) {
     return new Promise((resolve, reject) => {
@@ -14,6 +14,80 @@ export function refreshShortTeamInfo({ commit }) {
                 message: err,
                 timeout: 2000,
                 color: 'red',
+                position: 'top',
+            });
+        });
+    });
+}
+
+export function getTeamLikes({ state, commit }) {
+    return new Promise((resolve, reject) => {
+        axiosInstance.post('/', {
+            requestType: "getTeamAndEventLikes",
+            sessionKey: state.sessionKey,
+        }).then((response) => {
+            commit('setTeamLikes', response.data.teamLikes);
+            resolve();
+        }).catch((err) => {
+            reject(err);
+            Notify.create({
+                message: err,
+                timeout: 2000,
+                color: 'red',
+                position: 'top',
+            });
+        });
+    });
+}
+
+export function likeTeam({ state, commit }, { teamNumber }) {
+    return new Promise((resolve, reject) => {
+        axiosInstance.post('/', {
+            requestType: "likeTeam",
+            sessionKey: state.sessionKey,
+            teamNumber,
+        }).then((response) => {
+            commit('setTeamLikes', response.data.teamLikes);
+            Notify.create({
+                message: response.data.success_msg,
+                timeout: 2000,
+                color: 'green',
+                position: 'top',
+            });
+            resolve();
+        }).catch((err) => {
+            reject(err);
+            Notify.create({
+                message: err,
+                timeout: 2000,
+                color: 'red',
+                position: 'top',
+            });
+        });
+    });
+}
+
+export function unlikeTeam({ state, commit }, { teamNumber }) {
+    return new Promise((resolve, reject) => {
+        axiosInstance.post('/', {
+            requestType: "unlikeTeam",
+            sessionKey: state.sessionKey,
+            teamNumber,
+        }).then((response) => {
+            commit('setTeamLikes', response.data.teamLikes);
+            Notify.create({
+                message: response.data.success_msg,
+                timeout: 2000,
+                color: 'green',
+            });
+            resolve();
+        }).catch((err) => {
+            reject(err);
+            Notify.create({
+                message: err,
+                timeout: 2000,
+                color: 'red',
+                position: 'top',
             });
         });
     });
@@ -37,6 +111,7 @@ export function getTeamAvatars({ commit }, { list_of_team_number }) {
                 message: err,
                 timeout: 2000,
                 color: 'red',
+                position: 'top',
             });
         });
     });
@@ -54,6 +129,7 @@ export function checkIfSessionKeyValid({ state, dispatch }) {
                         message: 'You got a login reward! +5',
                         timeout: 3000,
                         color: 'green',
+                        position: 'top',
                     });
                 }
                 resolve();
@@ -62,6 +138,7 @@ export function checkIfSessionKeyValid({ state, dispatch }) {
                     message: 'Session expired',
                     timeout: 3000,
                     color: 'red',
+                    position: 'top',
                 });
                 dispatch('userLogout');
                 resolve();

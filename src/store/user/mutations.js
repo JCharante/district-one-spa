@@ -34,3 +34,7 @@ export function recoverUserFromAnotherStore(state, otherStore) {
 export function setTeamAvatar(state, { team_number, avatar }) {
     Vue.set(state.teamAvatars, team_number, avatar);
 }
+
+export function setTeamLikes(state, teamLikes) {
+    Vue.set(state, 'teamLikes', teamLikes);
+}

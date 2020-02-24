@@ -7,6 +7,7 @@ function baseGen() {
         hideAnnouncement: false,
         shortTeamInfo: [],
         teamAvatars: {},
+        teamLikes: [],
     };
 }
 

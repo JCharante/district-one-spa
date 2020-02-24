@@ -53,6 +53,7 @@
         mounted() {
             this.$store.dispatch('checkIfSessionKeyValid');
             this.$store.dispatch('refreshShortTeamInfo');
+            this.$store.dispatch('getTeamLikes');
         },
         data() {
             return {

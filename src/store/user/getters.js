@@ -29,3 +29,7 @@ export function getDarkModeEnabled(state) {
 export function getEnableOnlineSync(state) {
     return state.enableOnlineSync;
 }
+
+export function getTeamLikes(state) {
+    return state.teamLikes;
+}
