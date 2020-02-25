@@ -1,7 +1,7 @@
 <template>
   <q-page class="flex justify-center">
     <div class="column items-center" style="margin-top: 50px;">
-      <div class="row" style="max-width: 70%;">
+      <div class="row" style="max-width: 70%;" v-if="!getHideAnnouncement">
         <p>Welcome! This is the continuation of frc.gg, a site which focused on ranking teams by performance with a matchmaking algorithm. In this iteration you can do the following:</p>
         <ul>
           <li>Vote for your favorite teams and events</li>
@@ -11,13 +11,13 @@
         </ul>
         <p>This is all just for fun, please don't take anything too seriously. If you really want Dark Mode or another feature contact me on Chief Delphi: JCharante or email dos@jcharante.com.</p>
       </div>
-      <div class="row justify-around">
-        <q-btn color="black" outline label="Dismiss"/>
+      <div class="row justify-around"  v-if="!getHideAnnouncement">
+        <q-btn color="black" outline label="Dismiss" @click="setHideAnnouncement(true)"/>
         <q-btn v-if="!isProbablySignedIn" color="primary" label="Create Account" @click="$refs.loginmodal.show()"/>
       </div>
-      <div class="row" style="width: 85%">
-          <AllTeamsView/>
-          <AllEventsView/>
+      <div class="row">
+          <AllTeamsView @promptlogin="$refs.loginmodal.show()"/>
+          <AllEventsView @promptlogin="$refs.loginmodal.show()"/>
       </div>
     </div>
     <LogInModal ref="loginmodal"/>
@@ -25,7 +25,7 @@
 </template>
 
 <script>
-    import { mapGetters } from 'vuex';
+    import { mapGetters, mapActions } from 'vuex';
     import LogInModal from '../components/LogInModal';
     import AllTeamsView from '../components/AllTeamsView';
     import AllEventsView from '../components/AllEventsView';
@@ -34,7 +34,10 @@
         name: 'PageIndex',
         components: { AllEventsView, AllTeamsView, LogInModal },
         computed: {
-            ...mapGetters(['isProbablySignedIn']),
+            ...mapGetters(['isProbablySignedIn', 'getHideAnnouncement']),
+        },
+        methods: {
+            ...mapActions(['setHideAnnouncement']),
         },
     };
 </script>

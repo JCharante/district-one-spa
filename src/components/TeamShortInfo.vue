@@ -27,13 +27,13 @@
                                round
                                icon="favorite"
                                size="xs"
-                               @click="unlikeTeam({ teamNumber: team.team_number })"
+                               @click="isProbablySignedIn ? unlikeTeam({ teamNumber: team.team_number }) : $emit('promptlogin')"
                                color="primary"/>
                         <q-btn v-if="!teamIsLiked"
                                round
                                outline
                                icon="favorite"
-                               @click="likeTeam({ teamNumber: team.team_number })"
+                               @click="isProbablySignedIn ? likeTeam({ teamNumber: team.team_number }) : $emit('promptlogin')"
                                size="xs"
                                color="primary"/>
                     </div>
@@ -53,7 +53,7 @@
             ...mapActions(['likeTeam', 'unlikeTeam']),
         },
         computed: {
-            ...mapGetters(['getTeamAvatars', 'getTeamLikes']),
+            ...mapGetters(['getTeamAvatars', 'getTeamLikes', 'isProbablySignedIn']),
             teamIsLiked() {
                 return this.getTeamLikes.includes(this.team.team_number);
             },

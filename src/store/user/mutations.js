@@ -30,3 +30,7 @@ export function setTeamLikes(state, teamLikes) {
 export function setEventLikes(state, eventLikes) {
     Vue.set(state, 'eventLikes', eventLikes);
 }
+
+export function setHideAnnouncement(state, bool) {
+    Vue.set(state, 'hideAnnouncement', bool);
+}

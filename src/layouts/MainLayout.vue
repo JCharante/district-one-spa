@@ -35,7 +35,7 @@
           :key="link.title"
           v-bind="link"
         />
-          <q-item clickable tag="a">
+          <q-item clickable tag="a" v-if="isProbablySignedIn">
               <q-item-section avatar>
                   <q-icon name="exit_to_app" @click="userLogout"/>
               </q-item-section>
@@ -55,7 +55,7 @@
 
 <script>
     import EssentialLink from 'components/EssentialLink';
-    import { mapActions } from 'vuex';
+    import { mapActions, mapGetters } from 'vuex';
 
     export default {
         name: 'MainLayout',
@@ -66,8 +66,10 @@
         mounted() {
             this.$store.dispatch('checkIfSessionKeyValid');
             this.$store.dispatch('refreshShortTeamInfo');
-            this.$store.dispatch('getTeamLikes');
             this.$store.dispatch('refreshShortEventInfo');
+        },
+        computed: {
+            ...mapGetters(['isProbablySignedIn']),
         },
         methods: {
             ...mapActions(['userLogout']),

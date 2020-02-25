@@ -45,6 +45,7 @@
 
 <script>
     import { VueTelInput } from 'vue-tel-input';
+    import { Notify } from 'quasar';
 
     export default {
         name: 'LogInModal',
@@ -87,7 +88,15 @@
                     code: this.code,
                 }).then((response) => {
                     this.$store.dispatch('setSessionKey', response.data);
+                    this.$store.dispatch('checkIfSessionKeyValid', response.data);
                     console.log(response);
+                    Notify.create({
+                        message: "You have logged in!",
+                        timeout: 2000,
+                        color: 'green',
+                        position: 'top',
+                    });
+                    this.vmodel = false;
                 });
             },
         },

@@ -207,6 +207,7 @@ export function checkIfSessionKeyValid({ state, dispatch }) {
             sessionKey: state.sessionKey,
         }).then((response) => {
             if (response.data.valid) {
+                dispatch('getTeamLikes');
                 if (response.data.gaveReward) {
                     Notify.create({
                         message: 'You got a login reward! +5',
@@ -241,6 +242,7 @@ export function userLogout({ commit, dispatch }) {
         commit('setSessionKey', '');
         commit('setTeamLikes', []);
         commit('setEventLikes', []);
+        commit('setHideAnnouncement', false);
         dispatch('saveUserStore');
         resolve();
     });
@@ -255,5 +257,10 @@ export function login({ commit }, { username, password }) {
 export function setSessionKey({ commit, dispatch }, { sessionKey }) {
     localStorage.setItem('sessionKey', sessionKey);
     commit('setSessionKey', sessionKey);
+    dispatch('saveUserStore');
+}
+
+export function setHideAnnouncement({ commit, dispatch }, bool) {
+    commit('setHideAnnouncement', bool);
     dispatch('saveUserStore');
 }

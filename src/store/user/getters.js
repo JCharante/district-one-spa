@@ -41,3 +41,7 @@ export function getTeamLikes(state) {
 export function getEventLikes(state) {
     return state.eventLikes;
 }
+
+export function getHideAnnouncement(state) {
+    return state.hideAnnouncement;
+}

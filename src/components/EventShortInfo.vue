@@ -30,13 +30,13 @@
                                round
                                icon="favorite"
                                size="xs"
-                               @click="unlikeEvent({ eventCode: event.eventCode })"
+                               @click="isProbablySignedIn ? unlikeEvent({ eventCode: event.eventCode }) : $emit('promptlogin')"
                                color="primary"/>
                         <q-btn v-if="!eventIsLiked"
                                round
                                outline
                                icon="favorite"
-                               @click="likeEvent({ eventCode: event.eventCode })"
+                               @click="isProbablySignedIn ? likeEvent({ eventCode: event.eventCode }) : $emit('promptlogin')"
                                size="xs"
                                color="primary"/>
                     </div>
