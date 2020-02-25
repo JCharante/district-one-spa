@@ -15,10 +15,10 @@
                 <q-item-section>
                     <q-item-label>FRC {{ team.team_number }} - {{ team.nickname }}</q-item-label>
                     <q-item-label caption v-if="team.likes >= 2">
-                        Liked by {{ team.likes }} people.
+                        Favorited by {{ team.likes }} people.
                     </q-item-label>
                     <q-item-label caption v-if="team.likes === 1">
-                        Liked by a single person.
+                        Favorited by a single person.
                     </q-item-label>
                 </q-item-section>
                 <q-item-section>
