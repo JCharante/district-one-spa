@@ -10,6 +10,10 @@ export function getShortTeamInfo(state) {
     return state.shortTeamInfo;
 }
 
+export function getShortEventInfo(state) {
+    return state.shortEventInfo;
+}
+
 export function getTeamAvatars(state) {
     return state.teamAvatars;
 }
@@ -32,4 +36,8 @@ export function getEnableOnlineSync(state) {
 
 export function getTeamLikes(state) {
     return state.teamLikes;
+}
+
+export function getEventLikes(state) {
+    return state.eventLikes;
 }

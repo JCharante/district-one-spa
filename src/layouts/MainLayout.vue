@@ -23,6 +23,9 @@
       v-model="leftDrawerOpen"
       show-if-above
       bordered
+      :mini="miniState"
+      @mouseover="miniState = false"
+      @mouseout="miniState = true"
       content-class="bg-grey-1"
     >
       <q-list>
@@ -32,6 +35,15 @@
           :key="link.title"
           v-bind="link"
         />
+          <q-item clickable tag="a">
+              <q-item-section avatar>
+                  <q-icon name="exit_to_app" @click="userLogout"/>
+              </q-item-section>
+
+              <q-item-section>
+                  <q-item-label>Log out</q-item-label>
+              </q-item-section>
+          </q-item>
       </q-list>
     </q-drawer>
 
@@ -43,6 +55,7 @@
 
 <script>
     import EssentialLink from 'components/EssentialLink';
+    import { mapActions } from 'vuex';
 
     export default {
         name: 'MainLayout',
@@ -54,46 +67,31 @@
             this.$store.dispatch('checkIfSessionKeyValid');
             this.$store.dispatch('refreshShortTeamInfo');
             this.$store.dispatch('getTeamLikes');
+            this.$store.dispatch('refreshShortEventInfo');
+        },
+        methods: {
+            ...mapActions(['userLogout']),
         },
         data() {
             return {
                 leftDrawerOpen: false,
+                miniState: true,
                 essentialLinks: [
                     {
-                        title: 'Docs',
-                        caption: 'quasar.dev',
-                        icon: 'school',
-                        link: 'https://quasar.dev',
+                        title: 'Chief Delphi Thread',
+                        icon: 'forum',
+                        link: 'https://www.chiefdelphi.com/t/frc-gg/356118',
                     },
                     {
-                        title: 'Github',
-                        caption: 'github.com/quasarframework',
+                        title: 'Author\'s Github',
+                        caption: 'github.com/JCharante',
                         icon: 'code',
-                        link: 'https://github.com/quasarframework',
+                        link: 'https://github.com/JCharante',
                     },
                     {
-                        title: 'Discord Chat Channel',
-                        caption: 'chat.quasar.dev',
-                        icon: 'chat',
-                        link: 'https://chat.quasar.dev',
-                    },
-                    {
-                        title: 'Forum',
-                        caption: 'forum.quasar.dev',
-                        icon: 'record_voice_over',
-                        link: 'https://forum.quasar.dev',
-                    },
-                    {
-                        title: 'Twitter',
-                        caption: '@quasarframework',
-                        icon: 'rss_feed',
-                        link: 'https://twitter.quasar.dev',
-                    },
-                    {
-                        title: 'Facebook',
-                        caption: '@QuasarFramework',
+                        title: 'Last Year\'s frc.gg',
                         icon: 'public',
-                        link: 'https://facebook.quasar.dev',
+                        link: 'https://s3.amazonaws.com/frc.gg.jcharante.com/index.html#/home/1',
                     },
                 ],
             };

@@ -20,6 +20,27 @@ export function refreshShortTeamInfo({ commit }) {
     });
 }
 
+
+export function refreshShortEventInfo({ commit }) {
+    return new Promise((resolve, reject) => {
+        axiosInstance.post('/', {
+            requestType: 'getShortEventInfo',
+        }).then((response) => {
+            commit('setShortEventInfo', response.data.events);
+            resolve();
+        }).catch((err) => {
+            reject(err);
+            Notify.create({
+                message: err,
+                timeout: 2000,
+                color: 'red',
+                position: 'top',
+            });
+        });
+    });
+}
+
+
 export function getTeamLikes({ state, commit }) {
     return new Promise((resolve, reject) => {
         axiosInstance.post('/', {
@@ -27,6 +48,7 @@ export function getTeamLikes({ state, commit }) {
             sessionKey: state.sessionKey,
         }).then((response) => {
             commit('setTeamLikes', response.data.teamLikes);
+            commit('setEventLikes', response.data.eventLikes);
             resolve();
         }).catch((err) => {
             reject(err);
@@ -48,6 +70,35 @@ export function likeTeam({ state, commit }, { teamNumber }) {
             teamNumber,
         }).then((response) => {
             commit('setTeamLikes', response.data.teamLikes);
+            commit('setEventLikes', response.data.eventLikes);
+            Notify.create({
+                message: response.data.success_msg,
+                timeout: 2000,
+                color: 'green',
+                position: 'top',
+            });
+            resolve();
+        }).catch((err) => {
+            reject(err);
+            Notify.create({
+                message: err,
+                timeout: 2000,
+                color: 'red',
+                position: 'top',
+            });
+        });
+    });
+}
+
+export function likeEvent({ state, commit }, { eventCode }) {
+    return new Promise((resolve, reject) => {
+        axiosInstance.post('/', {
+            requestType: "likeEvent",
+            sessionKey: state.sessionKey,
+            eventCode,
+        }).then((response) => {
+            commit('setTeamLikes', response.data.teamLikes);
+            commit('setEventLikes', response.data.eventLikes);
             Notify.create({
                 message: response.data.success_msg,
                 timeout: 2000,
@@ -75,6 +126,34 @@ export function unlikeTeam({ state, commit }, { teamNumber }) {
             teamNumber,
         }).then((response) => {
             commit('setTeamLikes', response.data.teamLikes);
+            commit('setEventLikes', response.data.eventLikes);
+            Notify.create({
+                message: response.data.success_msg,
+                timeout: 2000,
+                color: 'green',
+            });
+            resolve();
+        }).catch((err) => {
+            reject(err);
+            Notify.create({
+                message: err,
+                timeout: 2000,
+                color: 'red',
+                position: 'top',
+            });
+        });
+    });
+}
+
+export function unlikeEvent({ state, commit }, { eventCode }) {
+    return new Promise((resolve, reject) => {
+        axiosInstance.post('/', {
+            requestType: "unlikeEvent",
+            sessionKey: state.sessionKey,
+            eventCode,
+        }).then((response) => {
+            commit('setTeamLikes', response.data.teamLikes);
+            commit('setEventLikes', response.data.eventLikes);
             Notify.create({
                 message: response.data.success_msg,
                 timeout: 2000,
@@ -119,6 +198,10 @@ export function getTeamAvatars({ commit }, { list_of_team_number }) {
 
 export function checkIfSessionKeyValid({ state, dispatch }) {
     return new Promise((resolve, reject) => {
+        if (state.sessionKey.length === 0) {
+            resolve();
+            return;
+        }
         axiosInstance.post('/', {
             requestType: 'checkSessionKey',
             sessionKey: state.sessionKey,
@@ -156,6 +239,8 @@ export function saveUserStore({ state }) {
 export function userLogout({ commit, dispatch }) {
     return new Promise((resolve, reject) => {
         commit('setSessionKey', '');
+        commit('setTeamLikes', []);
+        commit('setEventLikes', []);
         dispatch('saveUserStore');
         resolve();
     });

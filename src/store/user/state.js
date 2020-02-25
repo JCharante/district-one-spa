@@ -6,8 +6,10 @@ function baseGen() {
         lastAnnouncementVersionShown: 1,
         hideAnnouncement: false,
         shortTeamInfo: [],
+        shortEventInfo: [],
         teamAvatars: {},
         teamLikes: [],
+        eventLikes: [],
     };
 }
 
