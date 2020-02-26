@@ -1,7 +1,7 @@
 <template>
   <q-page class="flex justify-center">
-    <div class="column items-center" style="margin-top: 50px;">
-      <div class="row" style="max-width: 70%;" v-if="!getHideAnnouncement">
+    <div class="column items-center">
+      <div class="row" style="max-width: 70%; margin-top: 50px;" v-if="!getHideAnnouncement">
         <p>Welcome! This is the continuation of frc.gg, a site which focused on ranking teams by performance with a matchmaking algorithm. In this iteration you can do the following:</p>
         <ul>
           <li>Vote for your favorite teams and events</li>
@@ -15,6 +15,10 @@
         <q-btn color="black" outline label="Dismiss" @click="setHideAnnouncement(true)"/>
         <q-btn v-if="!isProbablySignedIn" color="primary" label="Create Account" @click="$refs.loginmodal.show()"/>
       </div>
+        <div class="text-center" v-if="getHideAnnouncement">
+            <h4 style="margin-bottom: 0;">District One Stats</h4>
+            <p>Week 1 Build 5</p>
+        </div>
       <div class="row">
           <AllTeamsView @promptlogin="$refs.loginmodal.show()"/>
           <AllEventsView @promptlogin="$refs.loginmodal.show()"/>
