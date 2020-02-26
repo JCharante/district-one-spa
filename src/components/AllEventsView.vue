@@ -1,5 +1,5 @@
 <template>
-    <div class="column col-xs-12 col-sm-6 q-pa-lg items-center" style="width: 400px; max-width: 100%; margin: auto; margin-top: 0;">
+    <div class="column col-xs-12 col-sm-6 q-pa-lg items-center" style="width: 450px; max-width: 100%; margin: auto; margin-top: 0;">
         <q-pagination
             v-model="curPage"
             :max="Math.ceil(getShortEventInfo.length / 10)"

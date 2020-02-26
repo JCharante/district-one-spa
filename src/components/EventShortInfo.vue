@@ -4,13 +4,15 @@
             <q-item>
                 <q-item-section avatar>
                     <q-avatar color="white" text-color="gray" font-size="0.9rem" v-if="event.week">
-                        W{{ event.week }}
+                        <span class="fake-link">W{{ event.week }}</span>
                     </q-avatar>
                 </q-item-section>
                 <q-item-section>
-                    <q-item-label>{{ event.short_name }}</q-item-label>
+                    <q-item-label>
+                        <span class="fake-link" @click="$router.push(`/event/${event.eventCode}`)">{{ event.short_name }}</span>
+                    </q-item-label>
                     <q-item-label caption v-if="event.district">
-                        {{ event.district.display_name }}
+                        <span class="fake-link">{{ event.district.display_name }}</span>
                     </q-item-label>
                 </q-item-section>
                 <q-item-section>
@@ -50,13 +52,13 @@
     import { mapGetters, mapActions } from 'vuex';
 
     export default {
-        name: 'TeamShortInfo',
+        name: 'EventShortInfo',
         props: ['event'],
         methods: {
             ...mapActions(['likeEvent', 'unlikeEvent']),
         },
         computed: {
-            ...mapGetters(['getEventLikes']),
+            ...mapGetters(['getEventLikes', 'isProbablySignedIn']),
             eventIsLiked() {
                 return this.getEventLikes.includes(this.event.eventCode);
             },
@@ -64,6 +66,13 @@
     };
 </script>
 
-<style scoped>
-
+<style scoped lang="stylus">
+    .fake-link {
+        color: $primary;
+        text-decoration:underline;
+    }
+    .fake-link:hover {
+        text-decoration: none;
+        cursor: pointer;
+    }
 </style>

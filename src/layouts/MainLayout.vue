@@ -35,9 +35,9 @@
           :key="link.title"
           v-bind="link"
         />
-          <q-item clickable tag="a" v-if="isProbablySignedIn">
+          <q-item clickable tag="a" v-if="isProbablySignedIn" @click="userLogout">
               <q-item-section avatar>
-                  <q-icon name="exit_to_app" @click="userLogout"/>
+                  <q-icon name="exit_to_app"/>
               </q-item-section>
 
               <q-item-section>

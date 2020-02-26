@@ -11,7 +11,7 @@
         </ul>
         <p>This is all just for fun, please don't take anything too seriously. If you really want Dark Mode or another feature contact me on Chief Delphi: JCharante or email dos@jcharante.com.</p>
       </div>
-      <div class="row justify-around"  v-if="!getHideAnnouncement">
+      <div class="row justify-around"  v-if="!getHideAnnouncement" style="width: 300px">
         <q-btn color="black" outline label="Dismiss" @click="setHideAnnouncement(true)"/>
         <q-btn v-if="!isProbablySignedIn" color="primary" label="Create Account" @click="$refs.loginmodal.show()"/>
       </div>

@@ -10,6 +10,14 @@ export function getShortTeamInfo(state) {
     return state.shortTeamInfo;
 }
 
+export function getShortTeamInfoDict(state) {
+    const dict = {};
+    state.shortTeamInfo.forEach((obj) => {
+        dict[obj.team_number] = obj;
+    });
+    return dict;
+}
+
 export function getShortEventInfo(state) {
     return state.shortEventInfo;
 }

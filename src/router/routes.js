@@ -4,6 +4,7 @@ const routes = [
         path: '/',
         component: () => import('layouts/MainLayout.vue'),
         children: [
+            { path: '/event/:eventcode', component: () => import('pages/EventView.vue'), props: true, name: 'EventView' },
             { path: '', component: () => import('pages/Index.vue') },
         ],
     },
