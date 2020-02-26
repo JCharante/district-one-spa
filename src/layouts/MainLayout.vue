@@ -2,7 +2,9 @@
   <q-layout view="lHh Lpr lFf">
     <q-header elevated>
       <q-toolbar>
+        <q-btn v-if="['TeamView','EventView'].includes($router.currentRoute.name)" flat round dense icon="arrow_back" @click="$router.go(-1)"/>
         <q-btn
+          v-else
           flat
           dense
           round
