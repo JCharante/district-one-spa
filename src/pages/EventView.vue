@@ -8,7 +8,7 @@
                 <h5>{{ event.name }}</h5>
             </div>
         </div>
-        <div class="row justify-around q-pa-lg">
+        <div class="row justify-around q-pa-lg" v-if="getShortTeamInfo.length > 0">
             <div class="col-12 text-center">
                 <h5>Featuring:</h5>
             </div>
@@ -32,7 +32,7 @@
         components: { LogInModal, TeamAsCard },
         props: ['eventcode'],
         computed: {
-            ...mapGetters(['getShortTeamInfoDict']),
+            ...mapGetters(['getShortTeamInfoDict', 'getShortTeamInfo']),
         },
         mounted() {
             this.$axios.post('/', { requestType: 'getEventInfo', eventCode: this.eventcode })
@@ -40,6 +40,7 @@
                     console.log(response.data);
                     this.gotDataYet = true;
                     this.event = response.data;
+                    this.$store.dispatch('getTeamAvatars', { list_of_team_number: response.data.team_numbers });
                 });
         },
         data() {
