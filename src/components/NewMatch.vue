@@ -1,6 +1,6 @@
 <template>
     <q-item>
-        <q-item-section avatar>
+        <q-item-section avatar v-if="this.protagonist !== undefined">
             <q-avatar color="purple"
                       text-color="white"
                       v-if="match.actual_time === null">
@@ -34,6 +34,7 @@
                                 <q-item-label>
                                     <b v-if="match.actual_time != null">
                                         {{ match.winning_alliance === 'red' ? 'Victory' : 'Defeat' }}</b>
+                                    <b v-else>Predicting..</b>
                                     (Red Alliance)
                                     (<b>{{ (sumPreRankingsRed / sumPreRankings).toLocaleString("en", {style: "percent"})}}</b>)
                                 </q-item-label>
@@ -57,6 +58,7 @@
                                 <q-item-label>
                                     <b v-if="match.actual_time != null">
                                         {{ match.winning_alliance === 'blue' ? 'Victory' : 'Defeat' }}</b>
+                                    <b v-else>Predicting..</b>
                                     (Blue Alliance)
                                     (<b>{{ (sumPreRankingsBlue / sumPreRankings).toLocaleString("en", {style: "percent"})}}</b>)
                                 </q-item-label>
@@ -81,6 +83,7 @@
                                 <q-item-label>
                                     <b v-if="match.actual_time != null">
                                         {{ match.winning_alliance === 'red' ? 'Victory' : 'Defeat' }}</b>
+                                    <b v-else>Predicting..</b>
                                     (Red Alliance)
                                     (<b>{{ (sumPreRankingsRed / sumPreRankings).toLocaleString("en", {style: "percent"})}}</b>)
                                 </q-item-label>
@@ -104,6 +107,7 @@
                                 <q-item-label>
                                     <b v-if="match.actual_time != null">
                                         {{ match.winning_alliance === 'blue' ? 'Victory' : 'Defeat' }}</b>
+                                    <b v-else>Predicting..</b>
                                     (Blue Alliance)
                                     (<b>{{ (sumPreRankingsBlue / sumPreRankings).toLocaleString("en", {style: "percent"})}}</b>)
                                 </q-item-label>
@@ -180,6 +184,7 @@
                 return this.sumPreRankingsRed + this.sumPreRankingsBlue;
             },
             matchOutcome() {
+                if (this.protagonist === undefined) return 'Tie';
                 let protagonistTeam = null;
                 if (this.match.alliances.red.team_keys.includes(`frc${this.protagonist}`)) {
                     protagonistTeam = 'red';

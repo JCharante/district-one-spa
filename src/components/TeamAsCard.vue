@@ -20,7 +20,7 @@
                 </q-item-label>
 
                 <q-item-label v-if="Object.keys(teamRankingsDict).includes(`${teamNumber}`)">
-                    Rank #{{ teamRankingsDict[teamNumber]}} - {{ getShortTeamInfoDict[teamNumber].ranking.scalar.toFixed(2) }}
+                    Rank #{{ teamRankingsDict[teamNumber]}}, Score: {{ getShortTeamInfoDict[teamNumber].ranking.scalar.toFixed(2) }}
                 </q-item-label>
             </q-item-section>
         </q-item>

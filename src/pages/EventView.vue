@@ -18,6 +18,16 @@
                 :key="teamNumber"
                 :team-number="teamNumber"/>
         </div>
+        <div>
+            <div class="col-12 text-center">
+                <h5>Matches:</h5>
+            </div>
+            <NewMatch
+                @promptlogin="$refs.loginmodal.show()"
+                v-for="match in matchesSorted"
+                :key="match.key"
+                :match="match"/>
+        </div>
         <div class="row justify-around q-pa-lg" v-if="getShortTeamInfo.length > 0">
             <div class="col-12 text-center">
                 <h5>Featuring favorites:</h5>
@@ -36,13 +46,17 @@
     import { mapGetters } from 'vuex';
     import TeamAsCard from '../components/TeamAsCard';
     import LogInModal from '../components/LogInModal';
+    import NewMatch from '../components/NewMatch';
 
     export default {
         name: 'EventView',
-        components: { LogInModal, TeamAsCard },
+        components: { NewMatch, LogInModal, TeamAsCard },
         props: ['eventcode'],
         computed: {
             ...mapGetters(['getShortTeamInfoDict', 'getShortTeamInfo']),
+            matchesSorted() {
+                return this.event.matches.slice().sort((a, b) => (a.predicted_time < b.predicted_time ? 1 : -1));
+            },
         },
         mounted() {
             this.$axios.post('/', { requestType: 'getEventInfo', eventCode: this.eventcode })
