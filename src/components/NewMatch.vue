@@ -200,6 +200,10 @@
                         return 'Victory';
                     }
                     return 'Defeat';
+                } else if (protagonistTeam === 'red') {
+                    return this.sumPreRankingsRed > this.sumPreRankingsBlue ? 'Victory' : 'Defeat';
+                } else {
+                    return this.sumPreRankingsRed > this.sumPreRankingsBlue ? 'Defeat' : 'Victory';
                 }
                 // Match is in the future, must predict
                 /*
@@ -210,7 +214,6 @@
                     return protagonistTeam === 'blue' ? 'Victory' : 'Defeat';
                 }
                 */
-                return 'Tie';
             },
         },
     };

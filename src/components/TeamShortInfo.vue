@@ -23,7 +23,7 @@
                 </q-item-section>
                 <q-item-section>
                     <q-item-label>
-                        <span class="fake-link" @click="$router.push(`/team/${team.team_number}`)">FRC {{ team.team_number }} - {{ team.nickname }}</span>
+                        <router-link :to="`/team/${team.team_number}`" exact>FRC {{ team.team_number }} - {{ team.nickname }}</router-link>
                     </q-item-label>
                     <q-item-label caption v-if="team.likes >= 2">
                         Favorited by {{ team.likes }} people.
