@@ -34,13 +34,13 @@
                                round
                                icon="favorite"
                                size="xs"
-                               @click="isProbablySignedIn ? unlikeEvent({ eventCode: event.eventCode }) : $emit('promptlogin')"
+                               @click="isProbablySignedIn ? unlikeEvent({ eventCode: event.eventCode || event.key }) : $emit('promptlogin')"
                                color="primary"/>
                         <q-btn v-if="!eventIsLiked"
                                round
                                outline
                                icon="favorite"
-                               @click="isProbablySignedIn ? likeEvent({ eventCode: event.eventCode }) : $emit('promptlogin')"
+                               @click="isProbablySignedIn ? likeEvent({ eventCode: event.eventCode || event.key }) : $emit('promptlogin')"
                                size="xs"
                                color="primary"/>
                     </div>
@@ -62,7 +62,7 @@
         computed: {
             ...mapGetters(['getEventLikes', 'isProbablySignedIn']),
             eventIsLiked() {
-                return this.getEventLikes.includes(this.event.eventCode);
+                return this.getEventLikes.includes(this.event.eventCode) || this.getEventLikes.includes(this.event.key);
             },
         },
     };
