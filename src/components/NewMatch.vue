@@ -74,61 +74,56 @@
                             :team-number="parseInt(match.alliances.blue.team_keys[2].replace('frc', ''))"/>
                     </q-list>
                 </q-item-section>
+                <q-item-section v-if="!$q.screen.gt.xs">
+                    <q-list>
+                        <q-item>
+                            <q-item-section>
+                                <q-item-label>
+                                    <b v-if="match.actual_time != null">
+                                        {{ match.winning_alliance === 'red' ? 'Victory' : 'Defeat' }}</b>
+                                    (Red Alliance)
+                                    (<b>{{ (sumPreRankingsRed / sumPreRankings).toLocaleString("en", {style: "percent"})}}</b>)
+                                </q-item-label>
+                            </q-item-section>
+                        </q-item>
+
+                        <TeamAsCard
+                            @promptlogin="$emit('promptlogin')"
+                            :team-number="parseInt(match.alliances.red.team_keys[0].replace('frc', ''))"/>
+                        <TeamAsCard
+                            @promptlogin="$emit('promptlogin')"
+                            :team-number="parseInt(match.alliances.red.team_keys[1].replace('frc', ''))"/>
+                        <TeamAsCard
+                            @promptlogin="$emit('promptlogin')"
+                            :team-number="parseInt(match.alliances.red.team_keys[2].replace('frc', ''))"/>
+                    </q-list>
+
+                    <q-list>
+                        <q-item>
+                            <q-item-section>
+                                <q-item-label>
+                                    <b v-if="match.actual_time != null">
+                                        {{ match.winning_alliance === 'blue' ? 'Victory' : 'Defeat' }}</b>
+                                    (Blue Alliance)
+                                    (<b>{{ (sumPreRankingsBlue / sumPreRankings).toLocaleString("en", {style: "percent"})}}</b>)
+                                </q-item-label>
+                            </q-item-section>
+                        </q-item>
+
+                        <TeamAsCard
+                            @promptlogin="$emit('promptlogin')"
+                            :team-number="parseInt(match.alliances.blue.team_keys[0].replace('frc', ''))"/>
+                        <TeamAsCard
+                            @promptlogin="$emit('promptlogin')"
+                            :team-number="parseInt(match.alliances.blue.team_keys[1].replace('frc', ''))"/>
+                        <TeamAsCard
+                            @promptlogin="$emit('promptlogin')"
+                            :team-number="parseInt(match.alliances.blue.team_keys[2].replace('frc', ''))"/>
+                    </q-list>
+                </q-item-section>
             </q-item>
         </q-item-section>
     </q-item>
-    <!--
-        <q-item-section v-if="!$q.screen.gt.xs">
-          <q-list>
-            <q-item>
-              <q-item-section>
-                <q-item-label>
-                  <b v-if="!isScheduledMatch">
-                    {{ data.winner === 'red' ? 'Victory' : 'Defeat' }}</b>
-                  (Red Alliance)
-                  (<b>{{ data.red_win_probability.toLocaleString("en", {style: "percent"})}}</b>)
-                </q-item-label>
-              </q-item-section>
-            </q-item>
-
-            <new-team-entry alliance="red"
-                            :data="data.red0"
-                            :active="data.red0.team === protagonist"/>
-            <new-team-entry alliance="red"
-                            :data="data.red1"
-                            :active="data.red1.team === protagonist"/>
-            <new-team-entry alliance="red"
-                            :data="data.red2"
-                            :active="data.red2.team === protagonist"/>
-          </q-list>
-
-          <q-list>
-            <q-item>
-              <q-item-section>
-                <q-item-label>
-                  <b v-if="!isScheduledMatch">
-                    {{ data.winner === 'blue' ? 'Victory' : 'Defeat' }}</b>
-                  (Blue Alliance)
-                  (<b>{{ data.blue_win_probability.toLocaleString("en", {style: "percent"})}}</b>)
-                </q-item-label>
-              </q-item-section>
-            </q-item>
-
-            <new-team-entry alliance="blue"
-                            :data="data.blue0"
-                            :active="data.blue0.team === protagonist"/>
-            <new-team-entry alliance="blue"
-                            :data="data.blue1"
-                            :active="data.blue1.team === protagonist"/>
-            <new-team-entry alliance="blue"
-                            :data="data.blue2"
-                            :active="data.blue2.team === protagonist"/>
-          </q-list>
-        </q-item-section>
-      </q-item>
-    </q-item-section>
-  </q-item>
-  -->
 </template>
 
 <script>

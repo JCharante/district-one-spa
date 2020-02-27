@@ -43,8 +43,14 @@
                        flat
                        color="black"
                        @click="isProbablySignedIn ? likeTeam({ teamNumber: team.team_number }) : $refs.loginmodal.show()"/>
-                <span flat color="primary">
-                    {{ getShortTeamInfoDict[team.team_number].likes }} people have favorited
+                <span flat color="primary" v-if="getShortTeamInfoDict[team.team_number].likes === 1">
+                    One person has added this team to their favorites.
+                </span>
+                <span flat color="primary" v-if="getShortTeamInfoDict[team.team_number].likes >= 2">
+                    {{ getShortTeamInfoDict[team.team_number].likes }} people have added this team to their favorites
+                </span>
+                <span flat color="primary" v-if="getShortTeamInfoDict[team.team_number].likes === 0">
+                    Be the first to add this team to your favorites
                 </span>
             </q-card-actions>
         </q-card>
