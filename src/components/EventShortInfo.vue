@@ -3,13 +3,13 @@
         <q-list dense>
             <q-item>
                 <q-item-section avatar>
-                    <q-avatar color="white" text-color="gray" font-size="0.9rem" v-if="event.week">
-                        <span class="fake-link">W{{ event.week }}</span>
+                    <q-avatar color="white" text-color="gray" font-size="0.9rem" v-if="event.week !== null">
+                        <span class="">W{{ event.week }}</span>
                     </q-avatar>
                 </q-item-section>
                 <q-item-section>
                     <q-item-label>
-                        <span class="fake-link" @click="$router.push(`/event/${event.eventCode}`)">{{ event.short_name }}</span>
+                        <span class="fake-link" @click="$router.push(`/event/${event.eventCode || event.key}`)">{{ event.short_name }}</span>
                     </q-item-label>
                     <q-item-label caption v-if="event.district">
                         <span class="fake-link">{{ event.district.display_name }}</span>

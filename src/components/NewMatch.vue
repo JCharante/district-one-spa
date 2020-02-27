@@ -35,7 +35,7 @@
                                     <b v-if="match.actual_time != null">
                                         {{ match.winning_alliance === 'red' ? 'Victory' : 'Defeat' }}</b>
                                     (Red Alliance)
-                                    <!--(<b>{{ match.red_win_probability.toLocaleString("en", {style: "percent"})}}</b>)-->
+                                    (<b>{{ (sumPreRankingsRed / sumPreRankings).toLocaleString("en", {style: "percent"})}}</b>)
                                 </q-item-label>
                             </q-item-section>
                         </q-item>
@@ -58,7 +58,7 @@
                                     <b v-if="match.actual_time != null">
                                         {{ match.winning_alliance === 'blue' ? 'Victory' : 'Defeat' }}</b>
                                     (Blue Alliance)
-                                    <!--(<b>{{ data.blue_win_probability.toLocaleString("en", {style: "percent"})}}</b>)-->
+                                    (<b>{{ (sumPreRankingsBlue / sumPreRankings).toLocaleString("en", {style: "percent"})}}</b>)
                                 </q-item-label>
                             </q-item-section>
                         </q-item>
@@ -78,58 +78,6 @@
         </q-item-section>
     </q-item>
     <!--
-  <q-item>
-      <q-item>
-        <q-item-section v-if="$q.screen.gt.xs">
-          <q-list>
-            <q-item>
-              <q-item-section>
-                <q-item-label>
-                  <b v-if="!isScheduledMatch">
-                    {{ data.winner === 'red' ? 'Victory' : 'Defeat' }}</b>
-                  (Red Alliance)
-                  (<b>{{ data.red_win_probability.toLocaleString("en", {style: "percent"})}}</b>)
-                </q-item-label>
-              </q-item-section>
-            </q-item>
-
-            <new-team-entry alliance="red"
-                            :data="data.red0"
-                            :active="data.red0.team === protagonist"/>
-            <new-team-entry alliance="red"
-                            :data="data.red1"
-                            :active="data.red1.team === protagonist"/>
-            <new-team-entry alliance="red"
-                            :data="data.red2"
-                            :active="data.red2.team === protagonist"/>
-          </q-list>
-        </q-item-section>
-
-        <q-item-section v-if="$q.screen.gt.xs">
-          <q-list>
-            <q-item>
-              <q-item-section>
-                <q-item-label>
-                  <b v-if="!isScheduledMatch">
-                    {{ data.winner === 'blue' ? 'Victory' : 'Defeat' }}</b>
-                  (Blue Alliance)
-                  (<b>{{ data.blue_win_probability.toLocaleString("en", {style: "percent"})}}</b>)
-                </q-item-label>
-              </q-item-section>
-            </q-item>
-
-            <new-team-entry alliance="blue"
-                            :data="data.blue0"
-                            :active="data.blue0.team === protagonist"/>
-            <new-team-entry alliance="blue"
-                            :data="data.blue1"
-                            :active="data.blue1.team === protagonist"/>
-            <new-team-entry alliance="blue"
-                            :data="data.blue2"
-                            :active="data.blue2.team === protagonist"/>
-          </q-list>
-        </q-item-section>
-
         <q-item-section v-if="!$q.screen.gt.xs">
           <q-list>
             <q-item>
@@ -194,7 +142,48 @@
         components: { TeamAsCard, NewTeamEntry },
         props: ['match', 'protagonist'],
         computed: {
-            ...mapGetters(['getShortEventInfoDict']),
+            ...mapGetters(['getShortEventInfoDict', 'getShortTeamInfoDict']),
+            sumPreRankingsRed() {
+                const self = this;
+                if (this.match.actual_time !== null) {
+                    return this.match.alliances.red.team_keys.map((k) => {
+                        const { mu, sigma } = self.match.matchRankings.preRankings[k];
+                        return mu - 3 * sigma;
+                    }).reduce((a, b) => a + b);
+                } else {
+                    return this.match.alliances.red.team_keys.map((k) => {
+                        // eslint-disable-next-line radix
+                        if ('ranking' in self.getShortTeamInfoDict[parseInt(k.replace('frc', ''))]) {
+                            // eslint-disable-next-line radix
+                            return self.getShortTeamInfoDict[parseInt(k.replace('frc', ''))].ranking.scalar;
+                        } else {
+                            return 0;
+                        }
+                    }).reduce((a, b) => a + b);
+                }
+            },
+            sumPreRankingsBlue() {
+                const self = this;
+                if (this.match.actual_time !== null) {
+                    return this.match.alliances.blue.team_keys.map((k) => {
+                        const { mu, sigma } = self.match.matchRankings.preRankings[k];
+                        return mu - 3 * sigma;
+                    }).reduce((a, b) => a + b);
+                } else {
+                    return this.match.alliances.blue.team_keys.map((k) => {
+                        // eslint-disable-next-line radix
+                        if ('ranking' in self.getShortTeamInfoDict[parseInt(k.replace('frc', ''))]) {
+                            // eslint-disable-next-line radix
+                            return self.getShortTeamInfoDict[parseInt(k.replace('frc', ''))].ranking.scalar;
+                        } else {
+                            return 0;
+                        }
+                    }).reduce((a, b) => a + b);
+                }
+            },
+            sumPreRankings() {
+                return this.sumPreRankingsRed + this.sumPreRankingsBlue;
+            },
             matchOutcome() {
                 let protagonistTeam = null;
                 if (this.match.alliances.red.team_keys.includes(`frc${this.protagonist}`)) {

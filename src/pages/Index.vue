@@ -6,10 +6,14 @@
         <ul>
           <li>Vote for your favorite teams and events</li>
           <li>See top ranked teams by performance over the 2020 season.</li>
-          <li>(In progress) Make predictions on event winners!</li>
-          <li>(In progress) See match predictions</li>
+          <li>See match predictions</li>
+          <li>(Coming soon) Make predictions on event winners!</li>
+          <li>(Coming soon) Good styling</li>
+          <li>(Coming soon) Custom match predictor calculator</li>
+          <li>(Coming soon) Data visualizations</li>
         </ul>
         <p>This is all just for fun, please don't take anything too seriously. If you really want Dark Mode or another feature contact me on Chief Delphi: JCharante or email dos@jcharante.com.</p>
+        <p>Don't expect any new features this Thursday through Saturday. I'm busy at an event. Rankings will continue to update automatically unless Windows 10 updates or my desktop loses power. The data is on the cloud but the ranking script is being run in Webstorm at the moment.</p>
       </div>
       <div class="row justify-around"  v-if="!getHideAnnouncement" style="width: 300px">
         <q-btn color="black" outline label="Dismiss 24 hrs" @click="setHideAnnouncement24Hours()"/>
@@ -21,6 +25,7 @@
         </div>
       <div class="row">
           <RankedTeamsView @promptlogin="$refs.loginmodal.show()"/>
+          <events-this-week-view @promptlogin="$refs.loginmodal.show()"/>
           <AllTeamsView @promptlogin="$refs.loginmodal.show()"/>
           <AllEventsView @promptlogin="$refs.loginmodal.show()"/>
       </div>
@@ -35,10 +40,11 @@
     import AllTeamsView from '../components/AllTeamsView';
     import RankedTeamsView from '../components/RankedTeamsView';
     import AllEventsView from '../components/AllEventsView';
+    import EventsThisWeekView from '../components/EventsThisWeekView';
 
     export default {
         name: 'PageIndex',
-        components: { AllEventsView, AllTeamsView, LogInModal, RankedTeamsView },
+        components: { EventsThisWeekView, AllEventsView, AllTeamsView, LogInModal, RankedTeamsView },
         computed: {
             ...mapGetters(['isProbablySignedIn', 'getHideAnnouncement']),
         },

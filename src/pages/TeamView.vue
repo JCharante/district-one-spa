@@ -95,6 +95,24 @@
             <q-item>
                 <q-item-section>
                     <q-item-label class="text-center">
+                        Events for 2020
+                    </q-item-label>
+                </q-item-section>
+            </q-item>
+            <q-list>
+                <event-short-info v-for="event in team.events.slice().sort((a, b) => (Date.parse(a.start_date) > Date.parse(b.start_date) ? 1 : -1))"
+                                  :key="event.key"
+                                  :event="event"
+                                  @promptlogin="$emit('promptlogin')"/>
+            </q-list>
+        </q-card>
+        <q-card
+            flat
+            bordered
+            dense>
+            <q-item>
+                <q-item-section>
+                    <q-item-label class="text-center">
                         Matches for 2020
                     </q-item-label>
                 </q-item-section>
@@ -121,10 +139,11 @@
     import { mapGetters, mapActions } from 'vuex';
     import LogInModal from '../components/LogInModal';
     import NewMatch from '../components/NewMatch';
+    import EventShortInfo from '../components/EventShortInfo';
 
     export default {
         name: 'TeamView',
-        components: { NewMatch, LogInModal },
+        components: { EventShortInfo, NewMatch, LogInModal },
         props: ['teamNumber'],
         computed: {
             ...mapGetters(['getTeamAvatars', 'isProbablySignedIn', 'getTeamLikes', 'getShortTeamInfoDict', 'getShortTeamInfo', 'listRankedTeams', 'teamRankingsDict']),

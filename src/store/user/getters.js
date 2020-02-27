@@ -43,6 +43,15 @@ export function getShortEventInfo(state) {
     return state.shortEventInfo;
 }
 
+export function getShortEventInfoThisWeek(state) {
+    return state.shortEventInfo.filter((obj) => {
+        if (obj.week === 1 || obj.week === 0) {
+            return true;
+        }
+        return false;
+    });
+}
+
 export function getTeamAvatars(state) {
     return state.teamAvatars;
 }
