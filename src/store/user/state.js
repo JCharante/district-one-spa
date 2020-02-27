@@ -3,8 +3,7 @@ import { LocalStorage } from 'quasar';
 function baseGen() {
     return {
         sessionKey: '',
-        lastAnnouncementVersionShown: 1,
-        hideAnnouncement: false,
+        hideAnnouncementUntil: new Date(),
         shortTeamInfo: [],
         shortEventInfo: [],
         teamAvatars: {},

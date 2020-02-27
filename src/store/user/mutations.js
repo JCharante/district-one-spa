@@ -31,6 +31,6 @@ export function setEventLikes(state, eventLikes) {
     Vue.set(state, 'eventLikes', eventLikes);
 }
 
-export function setHideAnnouncement(state, bool) {
-    Vue.set(state, 'hideAnnouncement', bool);
+export function setHideAnnouncementUntil(state, bool) {
+    Vue.set(state, 'hideAnnouncementUntil', bool);
 }

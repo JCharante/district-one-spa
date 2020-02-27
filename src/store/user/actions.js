@@ -242,7 +242,7 @@ export function userLogout({ commit, dispatch }) {
         commit('setSessionKey', '');
         commit('setTeamLikes', []);
         commit('setEventLikes', []);
-        commit('setHideAnnouncement', false);
+        commit('setHideAnnouncementUntil', new Date());
         dispatch('saveUserStore');
         resolve();
     });
@@ -260,7 +260,9 @@ export function setSessionKey({ commit, dispatch }, { sessionKey }) {
     dispatch('saveUserStore');
 }
 
-export function setHideAnnouncement({ commit, dispatch }, bool) {
-    commit('setHideAnnouncement', bool);
+export function setHideAnnouncement24Hours({ commit, dispatch }) {
+    const newDate = new Date();
+    newDate.setHours(newDate.getHours() + 24);
+    commit('setHideAnnouncementUntil', newDate);
     dispatch('saveUserStore');
 }
