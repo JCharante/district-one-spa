@@ -13,7 +13,7 @@
 
             <q-item-section>
                 <q-item-label>
-                    <router-link :to="`/team/${teamNumber}`" exact>{{ getShortTeamInfoDict[teamNumber].nickname }}</router-link>>
+                    <router-link :to="`/team/${teamNumber}`" exact>{{ getShortTeamInfoDict[teamNumber].nickname }}</router-link>
                 </q-item-label>
                 <q-item-label caption>
                     FRC {{ teamNumber }}

@@ -20,7 +20,7 @@
         <q-item-section>
             <q-item>
                 <q-item-section>
-                    <q-item-label>{{ getShortEventInfoDict[match.event_key].name }} - {{ match.comp_level }}{{ match.set_number}}m{{ match.match_number}}
+                    <q-item-label><router-link :to="`/event${match.event_key}`">{{ getShortEventInfoDict[match.event_key].name }}</router-link> - {{ match.comp_level }}{{ match.set_number}}m{{ match.match_number}}
                         (<a :href="'https://www.thebluealliance.com/match/' + match.key"
                             target="_blank">view on TBA</a>)
                     </q-item-label>
@@ -144,7 +144,7 @@
             ...mapGetters(['getShortEventInfoDict', 'getShortTeamInfoDict']),
             sumPreRankingsRed() {
                 const self = this;
-                if (this.match.actual_time !== null) {
+                if (this.match.actual_time !== null && 'matchRankings' in self.match) {
                     return this.match.alliances.red.team_keys.map((k) => {
                         const { mu, sigma } = self.match.matchRankings.preRankings[k];
                         return mu - 3 * sigma;
@@ -163,7 +163,7 @@
             },
             sumPreRankingsBlue() {
                 const self = this;
-                if (this.match.actual_time !== null) {
+                if (this.match.actual_time !== null && 'matchRankings' in self.match) {
                     return this.match.alliances.blue.team_keys.map((k) => {
                         const { mu, sigma } = self.match.matchRankings.preRankings[k];
                         return mu - 3 * sigma;

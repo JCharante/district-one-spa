@@ -81,5 +81,5 @@ export function getEventLikes(state) {
 }
 
 export function getHideAnnouncement(state) {
-    return new Date() < state.hideAnnouncementUntil;
+    return new Date() < Date.parse(state.hideAnnouncementUntil);
 }
