@@ -9,10 +9,12 @@
                 </q-item-section>
                 <q-item-section>
                     <q-item-label>
-                        <span class="fake-link" @click="$router.push(`/event/${event.eventCode || event.key}`)">{{ event.short_name }}</span>
+                        <router-link exact :to="`/event/${event.eventCode || event.key}`">
+                            {{ event.short_name }}
+                        </router-link>
                     </q-item-label>
                     <q-item-label caption v-if="event.district">
-                        <span class="fake-link">{{ event.district.display_name }}</span>
+                        {{ event.district.display_name }}
                     </q-item-label>
                 </q-item-section>
                 <q-item-section>
