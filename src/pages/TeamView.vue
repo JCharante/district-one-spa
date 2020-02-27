@@ -36,17 +36,57 @@
                        color="red"
                        icon="favorite"
                        v-if="teamIsLiked"
-                       @click="isProbablySignedIn ? unlikeTeam({ teamNumber: team.team_number }) : $emit('promptlogin')"/>
+                       @click="isProbablySignedIn ? unlikeTeam({ teamNumber: team.team_number }) : $refs.loginmodal.show()"/>
                 <q-btn round
                        icon="favorite"
                        v-if="!teamIsLiked"
                        flat
                        color="black"
-                       @click="isProbablySignedIn ? likeTeam({ teamNumber: team.team_number }) : $emit('promptlogin')"/>
+                       @click="isProbablySignedIn ? likeTeam({ teamNumber: team.team_number }) : $refs.loginmodal.show()"/>
                 <span flat color="primary">
-                {{ getShortTeamInfoDict[team.team_number].likes }} people have favorited
-            </span>
+                    {{ getShortTeamInfoDict[team.team_number].likes }} people have favorited
+                </span>
             </q-card-actions>
+        </q-card>
+        <q-card
+            flat
+            bordered
+            v-if="typeof team.ranking !== typeof {}"
+            dense>
+            <q-item>
+                <q-item-section>
+                    <q-item-label class="text-center">
+                        Team Ranking
+                    </q-item-label>
+                </q-item-section>
+            </q-item>
+            <q-item>
+                <q-item-section>
+                    <q-item-label class="text-center">
+                        Sorry but this team is currently unranked. Tell them to do a week 1 event.
+                    </q-item-label>
+                </q-item-section>
+            </q-item>
+        </q-card>
+        <q-card
+            flat
+            bordered
+            v-if="typeof team.ranking === typeof {}"
+            dense>
+            <q-item>
+                <q-item-section>
+                    <q-item-label class="text-center">
+                        Rank {{ teamRankingsDict[team.team_number] }} with a combined score of {{ team.ranking.scalar.toFixed(2) }}
+                    </q-item-label>
+                </q-item-section>
+            </q-item>
+            <q-item>
+                <q-item-section>
+                    <q-item-label class="text-center">
+                        The cumulative score is calculated with the formula: strength ({{ team.ranking.mu.toFixed(2) }}) minus three times unreliability ({{ team.ranking.sigma.toFixed(2) }})
+                    </q-item-label>
+                </q-item-section>
+            </q-item>
         </q-card>
         <q-card
             flat
@@ -59,13 +99,19 @@
                     </q-item-label>
                 </q-item-section>
             </q-item>
-            <q-item>
-                <q-item-section v-if="team.matchesArray.length === 0">
+            <q-item v-if="team.matches.length === 0">
+                <q-item-section>
                     <q-item-label class="text-center">
                         Sorry but this team has no matches yet.
                     </q-item-label>
                 </q-item-section>
             </q-item>
+            <NewMatch
+                @promptlogin="$refs.loginmodal.show()"
+                v-for="match in matchesSorted"
+                :key="match.key"
+                :protagonist="team.team_number"
+                :match="match"/>
         </q-card>
         <LogInModal ref="loginmodal"/>
     </div>
@@ -74,31 +120,44 @@
 <script>
     import { mapGetters, mapActions } from 'vuex';
     import LogInModal from '../components/LogInModal';
+    import NewMatch from '../components/NewMatch';
 
     export default {
         name: 'TeamView',
-        components: { LogInModal },
+        components: { NewMatch, LogInModal },
         props: ['teamNumber'],
         computed: {
-            ...mapGetters(['getTeamAvatars', 'isProbablySignedIn', 'getTeamLikes', 'getShortTeamInfoDict', 'getShortTeamInfo']),
+            ...mapGetters(['getTeamAvatars', 'isProbablySignedIn', 'getTeamLikes', 'getShortTeamInfoDict', 'getShortTeamInfo', 'listRankedTeams', 'teamRankingsDict']),
             teamIsLiked() {
                 return this.getTeamLikes.includes(this.team.team_number);
+            },
+            matchesSorted() {
+                return this.team.matches.slice().sort((a, b) => (a.predicted_time < b.predicted_time ? 1 : -1));
             },
         },
         methods: {
             ...mapActions(['likeTeam', 'unlikeTeam']),
+            load() {
+                // eslint-disable-next-line radix
+                this.$axios.post('/', { requestType: 'getTeamInfo', teamNumber: parseInt(this.teamNumber) })
+                    .then((response) => {
+                        console.log(response.data);
+                        if ('avatar' in response.data) {
+                            this.$store.commit('setTeamAvatar', { team_number: this.teamNumber, avatar: response.data.avatar });
+                        }
+                        this.team = response.data;
+                        this.gotDataYet = true;
+                    });
+            },
         },
         mounted() {
-            // eslint-disable-next-line radix
-            this.$axios.post('/', { requestType: 'getTeamInfo', teamNumber: parseInt(this.teamNumber) })
-                .then((response) => {
-                    console.log(response.data);
-                    if ('avatar' in response.data) {
-                        this.$store.commit('setTeamAvatar', { team_number: this.teamNumber, avatar: response.data.avatar });
-                    }
-                    this.team = response.data;
-                    this.gotDataYet = true;
-                });
+            this.load();
+        },
+        watch: {
+            teamNumber(old, e) {
+                this.gotDataYet = false;
+                this.load();
+            },
         },
         data() {
             return {

@@ -14,10 +14,27 @@ export function listRankedTeams(state) {
     return state.shortTeamInfo.filter((v) => typeof v.ranking === typeof {}).sort((a, b) => (a.ranking.scalar > b.ranking.scalar ? -1 : 1));
 }
 
+export function teamRankingsDict(state) {
+    const dict = {};
+    // eslint-disable-next-line no-plusplus
+    for (let i = 1; i < listRankedTeams(state).length; i++) {
+        dict[listRankedTeams(state)[i - 1].team_number] = i;
+    }
+    return dict;
+}
+
 export function getShortTeamInfoDict(state) {
     const dict = {};
     state.shortTeamInfo.forEach((obj) => {
         dict[obj.team_number] = obj;
+    });
+    return dict;
+}
+
+export function getShortEventInfoDict(state) {
+    const dict = {};
+    state.shortEventInfo.forEach((obj) => {
+        dict[obj.eventCode] = obj;
     });
     return dict;
 }

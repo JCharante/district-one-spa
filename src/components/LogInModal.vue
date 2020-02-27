@@ -2,10 +2,10 @@
     <q-dialog v-model="vmodel">
         <q-card>
             <q-card-section>
-                <div class="text-p">Hi, in order to prevent abuse, District One Stats (DOS) uses one-time passwords for account management. <b>We don't ask for an email, a username, nor a password.</b> That means you don't need to remember yet another password, and also means that you don't have to give up identifiable information. Whenever you want to log in, a 6-digit code will be sent to your phone number.</div>
+                <div class="text-p">Hi, in order to prevent abuse, District One Stats (DOS) uses one-time passwords for account management. <b>We don't ask for an email, a username, nor a password.</b> That means you don't need to remember yet another password, and also means that you don't have to give up additional identifiable information. Whenever you want to log in, a 6-digit code will be sent to your phone number.</div>
             </q-card-section>
             <q-card-section>
-                <div class="text-p">Anyone signing up must be over the age of 13. If someone is found in violation of this, they will be promptly banned and have their phone number blacklisted from the site.</div>
+                <div class="text-p">Anyone signing up must be over the age of 13. If someone is found in violation of this, their account will be deleted and their phone number blacklisted from the site.</div>
             </q-card-section>
             <q-card-section>
                 <template v-if="!enterCodeMode">
@@ -38,6 +38,9 @@
                         <p class="text-center"><span class="fake-link" @click="changeNumber">Wrong number?</span> | <span class="fake-link" @click="resendCode">Resend code</span></p>
                     </div>
                 </template>
+            </q-card-section>
+            <q-card-section>
+                <a href="https://github.com/JCharante/district-one/blob/master/privacy-policy.md">Read our privacy policy. By entering your phone number to log in or create an account, you are agreeing to it.</a>
             </q-card-section>
         </q-card>
     </q-dialog>

@@ -18,6 +18,10 @@
                 <q-item-label caption>
                     FRC {{ teamNumber }}
                 </q-item-label>
+
+                <q-item-label v-if="Object.keys(teamRankingsDict).includes(`${teamNumber}`)">
+                    Rank #{{ teamRankingsDict[teamNumber]}} - {{ getShortTeamInfoDict[teamNumber].ranking.scalar.toFixed(2) }}
+                </q-item-label>
             </q-item-section>
         </q-item>
         <q-card-actions>
@@ -50,7 +54,7 @@
             ...mapActions(['likeTeam', 'unlikeTeam']),
         },
         computed: {
-            ...mapGetters(['getShortTeamInfoDict', 'getTeamAvatars', 'isProbablySignedIn', 'getTeamLikes']),
+            ...mapGetters(['getShortTeamInfoDict', 'getTeamAvatars', 'isProbablySignedIn', 'getTeamLikes', 'teamRankingsDict']),
             teamIsLiked() {
                 return this.getTeamLikes.includes(this.teamNumber);
             },
