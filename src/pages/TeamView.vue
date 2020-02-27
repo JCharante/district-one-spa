@@ -166,7 +166,6 @@
                 // eslint-disable-next-line radix
                 this.$axios.post('/', { requestType: 'getTeamInfo', teamNumber: parseInt(this.teamNumber) })
                     .then((response) => {
-                        console.log(response.data);
                         if ('avatar' in response.data) {
                             this.$store.commit('setTeamAvatar', { team_number: this.teamNumber, avatar: response.data.avatar });
                         }
