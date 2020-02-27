@@ -20,7 +20,7 @@
         <q-item-section>
             <q-item>
                 <q-item-section>
-                    <q-item-label><router-link :to="`/event${match.event_key}`">{{ getShortEventInfoDict[match.event_key].name }}</router-link> - {{ match.comp_level }}{{ match.set_number}}m{{ match.match_number}}
+                    <q-item-label><router-link :to="`/event/${match.event_key}`">{{ getShortEventInfoDict[match.event_key].name }}</router-link> - {{ match.comp_level }}{{ match.set_number}}m{{ match.match_number}}
                         (<a :href="'https://www.thebluealliance.com/match/' + match.key"
                             target="_blank">view on TBA</a>)
                     </q-item-label>
