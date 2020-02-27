@@ -20,6 +20,7 @@
             <p>Week 1 Build 5</p>
         </div>
       <div class="row">
+          <RankedTeamsView @promptlogin="$refs.loginmodal.show()"/>
           <AllTeamsView @promptlogin="$refs.loginmodal.show()"/>
           <AllEventsView @promptlogin="$refs.loginmodal.show()"/>
       </div>
@@ -32,11 +33,12 @@
     import { mapGetters, mapActions } from 'vuex';
     import LogInModal from '../components/LogInModal';
     import AllTeamsView from '../components/AllTeamsView';
+    import RankedTeamsView from '../components/RankedTeamsView';
     import AllEventsView from '../components/AllEventsView';
 
     export default {
         name: 'PageIndex',
-        components: { AllEventsView, AllTeamsView, LogInModal },
+        components: { AllEventsView, AllTeamsView, LogInModal, RankedTeamsView },
         computed: {
             ...mapGetters(['isProbablySignedIn', 'getHideAnnouncement']),
         },

@@ -10,6 +10,10 @@ export function getShortTeamInfo(state) {
     return state.shortTeamInfo;
 }
 
+export function listRankedTeams(state) {
+    return state.shortTeamInfo.filter((v) => typeof v.ranking === typeof {}).sort((a, b) => (a.ranking.scalar > b.ranking.scalar ? -1 : 1));
+}
+
 export function getShortTeamInfoDict(state) {
     const dict = {};
     state.shortTeamInfo.forEach((obj) => {

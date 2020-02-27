@@ -1,6 +1,20 @@
 <template>
     <q-item>
         <q-list dense>
+            <q-item v-if="listRankedTeams.includes(team)">
+                <q-item-section avatar>
+                    Rank {{ listRankedTeams.indexOf(team) + 1}}
+                </q-item-section>
+                <q-item-section>
+                    <q-item-label>{{ team.ranking.scalar.toFixed(2) }}</q-item-label>
+                </q-item-section>
+                <q-item-section>
+                    <q-item-label>{{ team.ranking.mu.toFixed(2) }}</q-item-label>
+                </q-item-section>
+                <q-item-section>
+                    <q-item-label>{{ team.ranking.sigma.toFixed(2) }}</q-item-label>
+                </q-item-section>
+            </q-item>
             <q-item>
                 <q-item-section avatar>
                     <q-avatar square color="blue" v-if="team.team_number in getTeamAvatars">
@@ -50,7 +64,7 @@
             ...mapActions(['likeTeam', 'unlikeTeam']),
         },
         computed: {
-            ...mapGetters(['getTeamAvatars', 'getTeamLikes', 'isProbablySignedIn']),
+            ...mapGetters(['getTeamAvatars', 'getTeamLikes', 'isProbablySignedIn', 'listRankedTeams']),
             teamIsLiked() {
                 return this.getTeamLikes.includes(this.team.team_number);
             },
