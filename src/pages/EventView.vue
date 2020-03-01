@@ -22,11 +22,16 @@
             <div class="col-12 text-center">
                 <h5>Matches:</h5>
             </div>
-            <NewMatch
-                @promptlogin="$refs.loginmodal.show()"
-                v-for="match in matchesSorted"
-                :key="match.key"
-                :match="match"/>
+            <q-virtual-scroll style="max-height: 1080px;"
+                              :items="matchesSorted"
+                              separator>
+                <template v-slot="{ item, index }">
+                    <NewMatch
+                        @promptlogin="$refs.loginmodal.show()"
+                        :key="index"
+                        :match="item"/>
+                </template>
+            </q-virtual-scroll>
         </div>
         <div class="row justify-around q-pa-lg" v-if="getShortTeamInfo.length > 0">
             <div class="col-12 text-center">

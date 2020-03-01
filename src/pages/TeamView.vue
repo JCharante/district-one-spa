@@ -130,12 +130,17 @@
                     </q-item-label>
                 </q-item-section>
             </q-item>
-            <NewMatch
-                @promptlogin="$refs.loginmodal.show()"
-                v-for="match in matchesSorted"
-                :key="match.key"
-                :protagonist="team.team_number"
-                :match="match"/>
+            <q-virtual-scroll style="max-height: 1080px;"
+                              :items="matchesSorted"
+                              separator>
+                <template v-slot="{ item, index }">
+                    <NewMatch
+                        @promptlogin="$refs.loginmodal.show()"
+                        :key="index"
+                        :protagonist="team.team_number"
+                        :match="item"/>
+                </template>
+            </q-virtual-scroll>
         </q-card>
         <LogInModal ref="loginmodal"/>
     </div>
