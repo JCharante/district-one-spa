@@ -23,10 +23,11 @@
             <h4 style="margin-bottom: 0;">District One Stats</h4>
             <p>Week 1 Build 5</p>
         </div>
+        <div class="row">
+            <ranked-teams-view-as-flat-list @promptlogin="$refs.loginmodal.show()"/>
+        </div>
       <div class="row">
-          <RankedTeamsView @promptlogin="$refs.loginmodal.show()"/>
           <events-this-week-view @promptlogin="$refs.loginmodal.show()"/>
-          <AllTeamsView @promptlogin="$refs.loginmodal.show()"/>
           <AllEventsView @promptlogin="$refs.loginmodal.show()"/>
       </div>
     </div>
@@ -36,6 +37,7 @@
 
 <script>
     import { mapGetters, mapActions } from 'vuex';
+    import RankedTeamsViewAsFlatList from 'components/RankedTeamsViewAsFlatList';
     import LogInModal from '../components/LogInModal';
     import AllTeamsView from '../components/AllTeamsView';
     import RankedTeamsView from '../components/RankedTeamsView';
@@ -44,7 +46,7 @@
 
     export default {
         name: 'PageIndex',
-        components: { EventsThisWeekView, AllEventsView, AllTeamsView, LogInModal, RankedTeamsView },
+        components: { RankedTeamsViewAsFlatList, EventsThisWeekView, AllEventsView, LogInModal },
         computed: {
             ...mapGetters(['isProbablySignedIn', 'getHideAnnouncement']),
         },

@@ -131,6 +131,7 @@ export function unlikeTeam({ state, commit }, { teamNumber }) {
                 message: response.data.success_msg,
                 timeout: 2000,
                 color: 'green',
+                position: 'top',
             });
             resolve();
         }).catch((err) => {
