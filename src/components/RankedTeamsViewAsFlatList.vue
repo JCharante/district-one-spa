@@ -96,6 +96,7 @@
     export default {
         name: 'RankedTeamsViewAsFlatList',
         components: { },
+        props: ['whitelist'],
         methods: {
             ...mapActions(['likeTeam', 'unlikeTeam']),
         },
@@ -110,7 +111,11 @@
                 return ret;
             },
             eligibleTeams() {
-                return this.showBy === 'Sort by Ranked' ? this.listRankedTeams : this.getShortTeamInfo.slice().sort((a, b) => ((a.likes > b.likes) ? -1 : 1));
+                let ret = this.showBy === 'Sort by Ranked' ? this.listRankedTeams : this.getShortTeamInfo.slice().sort((a, b) => ((a.likes > b.likes) ? -1 : 1));
+                if (this.whitelist) {
+                    ret = ret.filter((v) => this.whitelist.includes(v.team_number));
+                }
+                return ret;
             },
         },
         data() {

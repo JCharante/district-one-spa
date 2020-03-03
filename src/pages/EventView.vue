@@ -8,15 +8,8 @@
                 <h5>{{ event.name }}</h5>
             </div>
         </div>
-        <div class="row justify-around q-pa-lg" v-if="getShortTeamInfo.length > 0">
-            <div class="col-12 text-center">
-                <h5>Ranked Competitors:</h5>
-            </div>
-            <TeamAsCard
-                @promptlogin="$refs.loginmodal.show()"
-                v-for="teamNumber in event.team_numbers.map((v) => { return getShortTeamInfoDict[v] }).filter((v) => ('ranking' in v)).sort((a, b) => { return a.ranking.scalar < b.ranking.scalar ? 1 : -1 }).map((v) => { return v.team_number })"
-                :key="teamNumber"
-                :team-number="teamNumber"/>
+        <div class="row" v-if="getShortTeamInfo.length > 0">
+            <RankedTeamsViewAsFlatList @promptlogin="$refs.loginmodal.show()" :whitelist="event.team_numbers"/>
         </div>
         <div>
             <div class="col-12 text-center">
@@ -33,29 +26,20 @@
                 </template>
             </q-virtual-scroll>
         </div>
-        <div class="row justify-around q-pa-lg" v-if="getShortTeamInfo.length > 0">
-            <div class="col-12 text-center">
-                <h5>Featuring favorites:</h5>
-            </div>
-            <TeamAsCard
-                @promptlogin="$refs.loginmodal.show()"
-                v-for="teamNumber in event.team_numbers.map((v) => { return getShortTeamInfoDict[v] }).sort((a, b) => { return a.likes < b.likes ? 1 : -1 }).map((v) => { return v.team_number })"
-                :key="teamNumber"
-                :team-number="teamNumber"/>
-        </div>
         <LogInModal ref="loginmodal"/>
     </div>
 </template>
 
 <script>
     import { mapGetters } from 'vuex';
+    import RankedTeamsViewAsFlatList from 'components/RankedTeamsViewAsFlatList';
     import TeamAsCard from '../components/TeamAsCard';
     import LogInModal from '../components/LogInModal';
     import NewMatch from '../components/NewMatch';
 
     export default {
         name: 'EventView',
-        components: { NewMatch, LogInModal, TeamAsCard },
+        components: { RankedTeamsViewAsFlatList, NewMatch, LogInModal },
         props: ['eventcode'],
         computed: {
             ...mapGetters(['getShortTeamInfoDict', 'getShortTeamInfo']),

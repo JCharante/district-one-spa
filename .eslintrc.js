@@ -65,6 +65,7 @@ module.exports = {
     'linebreak-style': 'off',
     'no-empty': 'off',
     'no-console': 'off',
+    'vue/no-unused-components': 'off',
     
     // allow console.log during development only
     // 'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
