@@ -19,10 +19,11 @@
                               :items="matchesSorted"
                               separator>
                 <template v-slot="{ item, index }">
-                    <NewMatch
+                    <match-list-item :key="index" :match="item"/>
+                    <!--<NewMatch
                         @promptlogin="$refs.loginmodal.show()"
                         :key="index"
-                        :match="item"/>
+                        :match="item"/>-->
                 </template>
             </q-virtual-scroll>
         </div>
@@ -33,13 +34,14 @@
 <script>
     import { mapGetters } from 'vuex';
     import RankedTeamsViewAsFlatList from 'components/RankedTeamsViewAsFlatList';
+    import MatchListItem from 'components/MatchListItem';
     import TeamAsCard from '../components/TeamAsCard';
     import LogInModal from '../components/LogInModal';
     import NewMatch from '../components/NewMatch';
 
     export default {
         name: 'EventView',
-        components: { RankedTeamsViewAsFlatList, NewMatch, LogInModal },
+        components: { MatchListItem, RankedTeamsViewAsFlatList, LogInModal },
         props: ['eventcode'],
         computed: {
             ...mapGetters(['getShortTeamInfoDict', 'getShortTeamInfo']),
