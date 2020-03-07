@@ -12,7 +12,7 @@
           <li>(Coming soon) Custom match predictor calculator</li>
           <li>(Coming soon) Data visualizations</li>
         </ul>
-        <p>This is all just for fun, please don't take anything too seriously. If you really want Dark Mode or another feature contact me on Chief Delphi: JCharante or email dos@jcharante.com. No new features this weekend, I'm at the Granite State event.</p>
+        <p>This is all just for fun, please don't take anything too seriously. For any comments, contact me on Chief Delphi: JCharante or email dos@jcharante.com.</p>
         <p>Rankings should update every ~10 minutes.</p>
       </div>
       <div class="row justify-around"  v-if="!getHideAnnouncement" style="width: 300px">

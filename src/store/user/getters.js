@@ -45,7 +45,7 @@ export function getShortEventInfo(state) {
 
 export function getShortEventInfoThisWeek(state) {
     return state.shortEventInfo.filter((obj) => {
-        if (obj.week === 1 || obj.week === 0) {
+        if (obj.week === 2) {
             return true;
         }
         return false;
