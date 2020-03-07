@@ -19,7 +19,7 @@
                               :items="matchesSorted"
                               separator>
                 <template v-slot="{ item, index }">
-                    <match-list-item :key="index" :match="item"/>
+                    <match-list-item :key="index" :match="item" @promptlogin="$refs.loginmodal.show()"/>
                     <q-separator :key="'a' + index" style="margin-top: 5px; margin-bottom: 5px"/>
                     <!--<NewMatch
                         @promptlogin="$refs.loginmodal.show()"

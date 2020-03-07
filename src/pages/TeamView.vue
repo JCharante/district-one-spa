@@ -134,11 +134,14 @@
                               :items="matchesSorted"
                               separator>
                 <template v-slot="{ item, index }">
+                    <MatchListItem :key="index" :match="item" @promptlogin="$refs.loginmodal.show()"/>
+                    <!--
                     <NewMatch
                         @promptlogin="$refs.loginmodal.show()"
                         :key="index"
                         :protagonist="team.team_number"
                         :match="item"/>
+                    -->
                 </template>
             </q-virtual-scroll>
         </q-card>
@@ -148,13 +151,14 @@
 
 <script>
     import { mapGetters, mapActions } from 'vuex';
+    import MatchListItem from 'components/MatchListItem';
     import LogInModal from '../components/LogInModal';
     import NewMatch from '../components/NewMatch';
     import EventShortInfo from '../components/EventShortInfo';
 
     export default {
         name: 'TeamView',
-        components: { EventShortInfo, NewMatch, LogInModal },
+        components: { MatchListItem, EventShortInfo, NewMatch, LogInModal },
         props: ['teamNumber'],
         computed: {
             ...mapGetters(['getTeamAvatars', 'isProbablySignedIn', 'getTeamLikes', 'getShortTeamInfoDict', 'getShortTeamInfo', 'listRankedTeams', 'teamRankingsDict']),

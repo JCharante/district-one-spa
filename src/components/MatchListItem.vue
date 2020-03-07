@@ -40,9 +40,7 @@
                             <router-link :to="`/team/${teamNumber}`" exact>
                                 {{ teamNumber }} - {{ getShortTeamInfoDict[teamNumber].nickname }}
                             </router-link>
-                            (<a :href="`https://www.thebluealliance.com/team/${teamNumber}`" target="_blank">
-                            TBA
-                        </a>)
+                            (<a :href="`https://www.thebluealliance.com/team/${teamNumber}`" target="_blank">TBA</a>)
                         </q-item-label>
                         <q-item-label caption>
                             Live Rank #{{ listRankedTeams.indexOf(getShortTeamInfoDict[teamNumber]) }},
@@ -83,9 +81,7 @@
                             <router-link :to="`/team/${teamNumber}`" exact>
                                 {{ teamNumber }} - {{ getShortTeamInfoDict[teamNumber].nickname }}
                             </router-link>
-                            (<a :href="`https://www.thebluealliance.com/team/${teamNumber}`" target="_blank">
-                            TBA
-                        </a>)
+                            (<a :href="`https://www.thebluealliance.com/team/${teamNumber}`" target="_blank">TBA</a>)
                         </q-item-label>
                         <q-item-label caption>
                             Live Rank #{{ listRankedTeams.indexOf(getShortTeamInfoDict[teamNumber]) }},
